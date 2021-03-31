@@ -1,4 +1,4 @@
-# Bookings and Reservation
+# Bookings and Reservations
 
 this is the repository for my bookings and reservations project.
 

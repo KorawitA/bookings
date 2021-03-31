@@ -1,0 +1,8 @@
+# Bookings and Reservation
+
+this is the repository for my bookings and reservations project.
+
+- Built in Go version 1.15
+- Uses the [chi-router](github.com/go-chi/chi)
+- Uses [alex edwards SCS](github.com/alexedwards/scs/v2) session management 
+- Users [nosurf](git.hub.com/jsutanas/nosurf) 

@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/KorawitA/bookings/pkg/config"
-	"github.com/KorawitA/bookings/pkg/handlers"
-	"github.com/KorawitA/bookings/pkg/render"
+	"github.com/KorawitA/bookings/internal/config"
+	"github.com/KorawitA/bookings/internal/handlers"
+	"github.com/KorawitA/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
 

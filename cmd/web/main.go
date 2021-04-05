@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 	"github.com/KorawitA/bookings/internal/config"
 	"github.com/KorawitA/bookings/internal/handlers"
+	"github.com/KorawitA/bookings/internal/models"
 	"github.com/KorawitA/bookings/internal/render"
 	"github.com/alexedwards/scs/v2"
 )
@@ -20,8 +22,24 @@ var session *scs.SessionManager
 
 // main is the main application function
 func main() {
+	err := run()
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	var app config.AppConfig
+	fmt.Println(fmt.Sprintf("Starting Application on port %s", portNumber))
+
+	srv := &http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
+	}
+	err = srv.ListenAndServe()
+	log.Fatal(err)
+}
+
+func run() error {
+	// what am I going to put in the session
+	gob.Register(models.Reservation{})
 
 	// change this to true when in production
 	app.InProduction = false
@@ -37,6 +55,7 @@ func main() {
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("Cannot create template cache")
+		return err
 	}
 
 	app.TemplateCache = tc
@@ -48,13 +67,5 @@ func main() {
 	handlers.NewHandlers(repo)
 
 	render.NewTemplates(&app)
-
-	fmt.Println(fmt.Sprintf("Starting Application on port %s", portNumber))
-
-	srv := &http.Server{
-		Addr:    portNumber,
-		Handler: routes(&app),
-	}
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	return nil
 }
